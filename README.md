@@ -21,3 +21,33 @@
 ```
 
 ## Usage
+
+Two matchers are provided for record: `hasField(fieldName)` and `field(fieldName, matcher)`.
+
+### hasField(fieldName)
+
+This matcher matches existing field with not null value.
+
+```java
+import static org.hamcrest.MatcherAssert.assertThat;
+import static rocks.cleancode.hamcrest.record.HasFieldMatcher.hasField;
+
+Person person = new Person("John", "DOE");
+
+assertThat(person, hasField("firstName"));
+```
+
+### field(fieldName, matcher)
+
+This matcher matches the value of the field.
+
+```java
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static rocks.cleancode.hamcrest.record.HasFieldMatcher.field;
+
+Person person = new Person("John", "DOE");
+
+assertThat(person, field("firstName", is(equalTo("John"))));
+```
