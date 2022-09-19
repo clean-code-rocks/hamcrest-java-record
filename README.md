@@ -20,6 +20,10 @@
 </dependency>
 ```
 
+## Requirement
+
+Java 16 or higher.
+
 ## Usage
 
 Two matchers are provided for record: `hasField(fieldName)` and `field(fieldName, matcher)`.
