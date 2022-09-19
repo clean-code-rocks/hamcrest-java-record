@@ -1,6 +1,7 @@
 package rocks.cleancode.hamcrest.record;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,9 +12,13 @@ import static java.util.Arrays.stream;
 
 public class HasFieldMatcher<R extends Record> extends TypeSafeDiagnosingMatcher<R> {
 
+    public static <R extends Record> Matcher<R> hasField(String fieldName) {
+        return new HasFieldMatcher<>(fieldName);
+    }
+
     private final String fieldName;
 
-    public HasFieldMatcher(String fieldName) {
+    private HasFieldMatcher(String fieldName) {
         this.fieldName = fieldName;
     }
 

@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static rocks.cleancode.hamcrest.record.HasFieldMatcher.hasField;
 
 public class HasFieldMatcherTest {
 
@@ -15,7 +16,7 @@ public class HasFieldMatcherTest {
     public void should_match_non_null_field() {
         Person person = new Person("John", "DOE");
 
-        assertThat(person, new HasFieldMatcher<>("firstName"));
+        assertThat(person, hasField("firstName"));
     }
 
     @Test
@@ -24,7 +25,7 @@ public class HasFieldMatcherTest {
 
         AssertionError assertionError = assertThrows(
                 AssertionError.class,
-                () -> assertThat(person, new HasFieldMatcher<>("birthDate"))
+                () -> assertThat(person, hasField("birthDate"))
         );
 
         String expectedMessage = String.format(
@@ -42,7 +43,7 @@ public class HasFieldMatcherTest {
 
         AssertionError assertionError = assertThrows(
                 AssertionError.class,
-                () -> assertThat(person, new HasFieldMatcher<>("firstName"))
+                () -> assertThat(person, hasField("firstName"))
         );
 
         String expectedMessage = String.format(
