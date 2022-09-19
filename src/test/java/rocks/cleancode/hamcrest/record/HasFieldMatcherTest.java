@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static rocks.cleancode.hamcrest.record.HasFieldMatcher.field;
 import static rocks.cleancode.hamcrest.record.HasFieldMatcher.hasField;
 
 public class HasFieldMatcherTest {
@@ -53,6 +54,13 @@ public class HasFieldMatcherTest {
         );
 
         assertThat(assertionError.getMessage(), is(equalTo(expectedMessage)));
+    }
+
+    @Test
+    public void should_match_field_value() {
+        Person person = new Person("John", "DOE");
+
+        assertThat(person, field("firstName", is(equalTo("John"))));
     }
 
 }

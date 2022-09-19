@@ -9,17 +9,25 @@ import java.lang.reflect.RecordComponent;
 import java.util.Optional;
 
 import static java.util.Arrays.stream;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 
-public class HasFieldMatcher<R extends Record> extends TypeSafeDiagnosingMatcher<R> {
+public class HasFieldMatcher<R extends Record, T> extends TypeSafeDiagnosingMatcher<R> {
 
-    public static <R extends Record> Matcher<R> hasField(String fieldName) {
-        return new HasFieldMatcher<>(fieldName);
+    public static <R extends Record, T> Matcher<R> hasField(String fieldName) {
+        return new HasFieldMatcher<>(fieldName, is(notNullValue()));
+    }
+
+    public static <R extends Record, T> Matcher<R> field(String fieldName, Matcher<T> valueMatcher) {
+        return new HasFieldMatcher<>(fieldName, valueMatcher);
     }
 
     private final String fieldName;
+    private final Matcher<T> valueMatcher;
 
-    private HasFieldMatcher(String fieldName) {
+    private HasFieldMatcher(String fieldName, Matcher<T> valueMatcher) {
         this.fieldName = fieldName;
+        this.valueMatcher = valueMatcher;
     }
 
     @Override
@@ -32,11 +40,11 @@ public class HasFieldMatcher<R extends Record> extends TypeSafeDiagnosingMatcher
             return false;
         }
 
-        mismatchDescription.appendText("was null");
+        Object value = invoke(recordComponent.get(), record);
 
-        return recordComponent
-                .map(rc -> invoke(rc, record))
-                .isPresent();
+        valueMatcher.describeMismatch(value, mismatchDescription);
+
+        return valueMatcher.matches(value);
     }
 
     private Optional<RecordComponent> recordComponent(R record) {
@@ -62,7 +70,9 @@ public class HasFieldMatcher<R extends Record> extends TypeSafeDiagnosingMatcher
         description
                 .appendText("field '")
                 .appendText(fieldName)
-                .appendText("' is not null");
+                .appendText("' ");
+
+        valueMatcher.describeTo(description);
     }
 
 }
