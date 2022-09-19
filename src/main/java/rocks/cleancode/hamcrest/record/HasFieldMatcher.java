@@ -14,7 +14,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 public class HasFieldMatcher<R extends Record, T> extends TypeSafeDiagnosingMatcher<R> {
 
-    public static <R extends Record, T> Matcher<R> hasField(String fieldName) {
+    public static <R extends Record> Matcher<R> hasField(String fieldName) {
         return new HasFieldMatcher<>(fieldName, is(notNullValue()));
     }
 
