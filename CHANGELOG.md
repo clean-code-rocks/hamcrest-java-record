@@ -7,6 +7,10 @@
 - Add link to [javadoc.io](https://javadoc.io/)
 - Set HTTPS link to [Hamcrest javadoc](https://hamcrest.org/JavaHamcrest/javadoc/2.2/)
 
+### Technical
+
+- Manage code style with [EditorConfig](https://editorconfig.org/)
+
 ## [1.0.0] - 2022-09-19
 
 ### Features
