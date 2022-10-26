@@ -8,6 +8,10 @@
 
 [Java Hamcrest](http://hamcrest.org/JavaHamcrest/) matchers for record.
 
+## Requirement
+
+Java 16+
+
 ## Installation
 
 ### Maven
